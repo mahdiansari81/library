@@ -21,16 +21,23 @@ public class Borrow {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true, nullable = false)
     private String traceCode;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    private LocalDateTime deliverTime;
+    @ManyToOne
+    @JoinColumn(name = "book_id", nullable = false)
+    private Book book;
+
+    @Builder.Default
+    private LocalDateTime deliverTime = LocalDateTime.now();
 
     private LocalDateTime returnTime;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     private Status status;
 }

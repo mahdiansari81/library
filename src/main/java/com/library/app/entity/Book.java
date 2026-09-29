@@ -18,11 +18,23 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String bookName;
-    private String author;
-    private String bookCode;
-    private String publishDate;
-    private Long stock;
-    private Long borrowCount;
 
+    @Column(nullable = false)
+    private String author;
+
+    @Column(unique = true, nullable = false)
+    private String bookCode;
+
+    private Integer publishYear;
+
+    @Column(nullable = false)
+    private Integer totalCopies;      // تعداد کل
+
+    @Column(nullable = false)
+    private Integer availableCopies;  // تعداد موجود
+
+    @Version
+    private Long version;             // برای Concurrency
 }

@@ -39,5 +39,5 @@ public class Borrow {
 
     @Builder.Default
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private Status status = Status.BORROWED;
 }

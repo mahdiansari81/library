@@ -5,9 +5,16 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "books")
+@Table(name = "books", indexes = {
+        @Index(name = "idx_book_created_at", columnList = "created_at"),
+        @Index(name = "idx_book_updated_at", columnList = "updated_at")
+})
 @Builder
 @Data
 @AllArgsConstructor
@@ -30,11 +37,19 @@ public class Book {
     private Integer publishYear;
 
     @Column(nullable = false)
-    private Integer totalCopies;      // تعداد کل
+    private Integer totalCopies;
 
     @Column(nullable = false)
-    private Integer availableCopies;  // تعداد موجود
+    private Integer availableCopies;
 
     @Version
-    private Long version;             // برای Concurrency
+    private Long version;
+
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 }

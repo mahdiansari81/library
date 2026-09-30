@@ -9,6 +9,7 @@ import com.library.app.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     // ۱. ساخت کاربر جدید
     @Transactional
@@ -29,7 +31,7 @@ public class UserService {
         User user = User.builder()
                 .username(dto.getUsername())
                 .mobile(dto.getMobile())
-                .password(dto.getPassword())
+                .password(passwordEncoder.encode(dto.getPassword()))
                 .build();
 
         User saved = userRepository.save(user);

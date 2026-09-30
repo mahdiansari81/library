@@ -8,11 +8,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,8 +37,17 @@ public class BookController {
 
     // ۳. لیست همه‌ی کتاب‌ها
     @GetMapping
-    public ResponseEntity<Page<BookResponseDto>> getAllBooks(Pageable pageable) {
-        return ResponseEntity.ok(bookService.getAllBooks(pageable));
+    public ResponseEntity<Page<BookResponseDto>> getAllBooks(
+            @RequestParam(required = false) String bookName,
+            @RequestParam(required = false) String author,
+            @RequestParam(required = false) Integer yearFrom,
+            @RequestParam(required = false) Integer yearTo,
+            @RequestParam(required = false) Boolean available,
+            @PageableDefault(size = 20) Pageable pageable) {
+
+        return ResponseEntity.ok(
+                bookService.searchBooks(bookName, author, yearFrom, yearTo, available, pageable)
+        );
     }
 
     // ۴. ویرایش کتاب

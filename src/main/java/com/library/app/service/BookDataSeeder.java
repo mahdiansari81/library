@@ -5,6 +5,7 @@ import com.library.app.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -12,8 +13,9 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
+@Order(1)
 @Slf4j
-public class DataSeeder implements CommandLineRunner {
+public class BookDataSeeder implements CommandLineRunner {
 
     private final BookRepository bookRepository;
 

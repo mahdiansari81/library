@@ -10,6 +10,7 @@ import com.library.app.repository.BorrowRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -79,6 +80,32 @@ public class BookService {
         }
 
         bookRepository.delete(book);
+    }
+
+    public Page<BookResponseDto> searchBooks(
+            String bookName,
+            String author,
+            Integer yearFrom,
+            Integer yearTo,
+            Boolean available,
+            Pageable pageable) {
+
+        Specification<Book> spec = Specification.allOf();
+
+        if (bookName != null && !bookName.isBlank()) {
+            spec = spec.and(BookSpecification.hasBookName(bookName));
+        }
+        if (author != null && !author.isBlank()) {
+            spec = spec.and(BookSpecification.hasAuthor(author));
+        }
+        if (yearFrom != null || yearTo != null) {
+            spec = spec.and(BookSpecification.hasPublishYearBetween(yearFrom, yearTo));
+        }
+        if (Boolean.TRUE.equals(available)) {
+            spec = spec.and(BookSpecification.isAvailable());
+        }
+
+        return bookRepository.findAll(spec, pageable).map(this::mapToDto);
     }
 
     private BookResponseDto mapToDto(Book book) {

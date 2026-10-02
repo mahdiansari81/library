@@ -21,7 +21,6 @@ public class BookController {
 
     private final BookService bookService;
 
-    // ۱. ثبت کتاب جدید
     @PostMapping
     public ResponseEntity<BookResponseDto> createBook(@Valid @RequestBody BookRequestDto dto) {
         log.info("درخواست ثبت کتاب جدید: {}", dto.getBookName());
@@ -29,13 +28,11 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
-    // ۲. گرفتن کتاب با id
     @GetMapping("/{id}")
     public ResponseEntity<BookResponseDto> getBookById(@PathVariable Long id) {
         return ResponseEntity.ok(bookService.getBookById(id));
     }
 
-    // ۳. لیست همه‌ی کتاب‌ها
     @GetMapping
     public ResponseEntity<Page<BookResponseDto>> getAllBooks(
             @RequestParam(required = false) String bookName,
@@ -50,7 +47,6 @@ public class BookController {
         );
     }
 
-    // ۴. ویرایش کتاب
     @PutMapping("/{id}")
     public ResponseEntity<BookResponseDto> updateBook(
             @PathVariable Long id,
@@ -58,7 +54,6 @@ public class BookController {
         return ResponseEntity.ok(bookService.updateBook(id, dto));
     }
 
-    // ۵. حذف کتاب
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);

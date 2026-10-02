@@ -5,7 +5,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 public class BookSpecification {
 
-    // ۱. جستجوی متنی در عنوان (LIKE)
+
     public static Specification<Book> hasBookName(String bookName) {
         return (root, query, cb) -> {
             if (bookName == null || bookName.isBlank()) return null;
@@ -13,7 +13,7 @@ public class BookSpecification {
         };
     }
 
-    // ۲. جستجوی متنی در نویسنده (LIKE)
+
     public static Specification<Book> hasAuthor(String author) {
         return (root, query, cb) -> {
             if (author == null || author.isBlank()) return null;
@@ -21,7 +21,7 @@ public class BookSpecification {
         };
     }
 
-    // ۳. بازه‌ی سال انتشار
+
     public static Specification<Book> hasPublishYearBetween(Integer yearFrom, Integer yearTo) {
         return (root, query, cb) -> {
             if (yearFrom == null && yearTo == null) return null;
@@ -31,7 +31,7 @@ public class BookSpecification {
         };
     }
 
-    // ۴. فقط کتاب‌های موجود
+
     public static Specification<Book> isAvailable() {
         return (root, query, cb) -> cb.greaterThan(root.get("availableCopies"), 0);
     }

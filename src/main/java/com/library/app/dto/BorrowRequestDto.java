@@ -18,5 +18,5 @@ public class BorrowRequestDto {
     @NotNull(message = "شناسه کتاب الزامی است")
     private Long bookId;
 
-    private Integer borrowDays;  // چند روز امانت (پیش‌فرض ۷)
+    private Integer borrowDays;
 }

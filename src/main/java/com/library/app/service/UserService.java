@@ -20,7 +20,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    // ۱. ساخت کاربر جدید
+
     @Transactional
     public UserResponseDto createUser(UserRequestDto dto) {
         userRepository.findByUsername(dto.getUsername())
@@ -38,20 +38,20 @@ public class UserService {
         return mapToDto(saved);
     }
 
-    // ۲. گرفتن کاربر با id
+
     public UserResponseDto getUserById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("کاربری با این id پیدا نشد"));
         return mapToDto(user);
     }
 
-    // ۳. لیست همه‌ی کاربران
+
     public Page<UserResponseDto> getAllUsers(Pageable pageable) {
         return userRepository.findAll(pageable)
                 .map(this::mapToDto);
     }
 
-    // متد کمکی: تبدیل Entity به DTO
+
     private UserResponseDto mapToDto(User user) {
         return UserResponseDto.builder()
                 .id(user.getId())

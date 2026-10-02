@@ -20,7 +20,6 @@ public class BorrowController {
 
     private final BorrowService borrowService;
 
-    // ۱. امانت دادن کتاب
     @PostMapping
     public ResponseEntity<BorrowResponseDto> borrowBook(@Valid @RequestBody BorrowRequestDto dto) {
         log.info("درخواست امانت کتاب {} توسط کاربر {}", dto.getBookId(), dto.getUserId());
@@ -28,20 +27,17 @@ public class BorrowController {
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
-    // ۲. پس گرفتن کتاب
     @PutMapping("/{id}/return")
     public ResponseEntity<BorrowResponseDto> returnBook(@PathVariable Long id) {
         log.info("درخواست پس دادن امانت با id: {}", id);
         return ResponseEntity.ok(borrowService.returnBook(id));
     }
 
-    // ۳. گرفتن امانت با id
     @GetMapping("/{id}")
     public ResponseEntity<BorrowResponseDto> getBorrowById(@PathVariable Long id) {
         return ResponseEntity.ok(borrowService.getBorrowById(id));
     }
 
-    // ۴. همه‌ی امانت‌های یه کاربر
     @GetMapping("/user/{userId}")
     public ResponseEntity<Page<BorrowResponseDto>> getBorrowsByUser(@PathVariable Long userId, Pageable pageable) {
         return ResponseEntity.ok(borrowService.getBorrowsByUser(userId, pageable));

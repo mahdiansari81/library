@@ -22,20 +22,20 @@ public class UserController {
 
     private final UserService userService;
 
-    // ۱. ساخت کاربر جدید
+
     @PostMapping
     public ResponseEntity<UserResponseDto> createUser(@Valid @RequestBody UserRequestDto dto) {
         log.info("درخواست ساخت کاربر: {}", dto.getUsername());
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(dto));
     }
 
-    // ۲. گرفتن کاربر با id
+
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDto> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
-    // ۳. لیست همه‌ی کاربران
+
     @GetMapping
     public ResponseEntity<Page<UserResponseDto>> getAllUsers(Pageable pageable) {
         return ResponseEntity.ok(userService.getAllUsers(pageable));

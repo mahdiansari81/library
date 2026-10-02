@@ -17,7 +17,7 @@ import java.util.Map;
 @Slf4j
 public class GlobalExceptionHandler {
 
-    // ۱. منبع پیدا نشد → 404
+
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleResourceNotFound(
             ResourceNotFoundException ex, HttpServletRequest request) {
@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
-    // ۲. منبع تکراری → 409
+
     @ExceptionHandler(DuplicateResourceException.class)
     public ResponseEntity<ErrorResponse> handleDuplicateResource(
             DuplicateResourceException ex, HttpServletRequest request) {
@@ -53,7 +53,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
 
-    // ۳. تداخل همزمانی → 409
+
     @ExceptionHandler(ConcurrencyException.class)
     public ResponseEntity<ErrorResponse> handleConcurrency(ConcurrencyException ex, HttpServletRequest request) {
 
@@ -70,7 +70,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
 
-    // ۴. خطای اعتبارسنجی (@Valid) → 400
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationErrors(
             MethodArgumentNotValidException ex) {
@@ -86,7 +86,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
 
-    // ۵. هر خطای دیگه → 500
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneric(
             Exception ex, HttpServletRequest request) {

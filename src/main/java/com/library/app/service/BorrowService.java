@@ -32,7 +32,7 @@ public class BorrowService {
     private final BookRepository bookRepository;
     private final UserRepository userRepository;
 
-    // ۱. امانت دادن کتاب (چالش اصلی!)
+
     @Transactional
     public BorrowResponseDto borrowBook(BorrowRequestDto dto) {
         Book book = bookRepository.findById(dto.getBookId())
@@ -73,7 +73,7 @@ public class BorrowService {
         return mapToDto(saved);
     }
 
-    // ۲. پس گرفتن کتاب
+
     @Transactional
     public BorrowResponseDto returnBook(Long borrowId) {
         Borrow borrow = borrowRepository.findById(borrowId)
@@ -94,20 +94,20 @@ public class BorrowService {
         return mapToDto(saved);
     }
 
-    // ۳. گرفتن امانت با id
+
     public BorrowResponseDto getBorrowById(Long id) {
         Borrow borrow = borrowRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("امانتی با این id پیدا نشد"));
         return mapToDto(borrow);
     }
 
-    // ۴. همه‌ی امانت‌های یه کاربر
+
     public Page<BorrowResponseDto> getBorrowsByUser(Long userId, Pageable pageable) {
         return borrowRepository.findByUserId(userId, pageable)
                 .map(this::mapToDto);
     }
 
-    // متد کمکی: تبدیل Entity به DTO
+
     private BorrowResponseDto mapToDto(Borrow borrow) {
         return BorrowResponseDto.builder()
                 .id(borrow.getId())

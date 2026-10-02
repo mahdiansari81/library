@@ -107,6 +107,10 @@ public class BorrowService {
                 .map(this::mapToDto);
     }
 
+    public Page<BorrowResponseDto> getBorrows(Pageable pageable) {
+        return borrowRepository.findAll(pageable)
+                .map(this::mapToDto);
+    }
 
     private BorrowResponseDto mapToDto(Borrow borrow) {
         return BorrowResponseDto.builder()
@@ -121,4 +125,5 @@ public class BorrowService {
                 .status(borrow.getStatus())
                 .build();
     }
+
 }

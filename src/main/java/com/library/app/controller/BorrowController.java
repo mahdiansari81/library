@@ -35,11 +35,20 @@ public class BorrowController {
 
     @GetMapping("/{id}")
     public ResponseEntity<BorrowResponseDto> getBorrowById(@PathVariable Long id) {
+        log.info("درخواست دریافت امانت با id: {}", id);
         return ResponseEntity.ok(borrowService.getBorrowById(id));
     }
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<Page<BorrowResponseDto>> getBorrowsByUser(@PathVariable Long userId, Pageable pageable) {
+        log.info("درخواست دریافت امانت‌های کاربر با id: {}", userId);
         return ResponseEntity.ok(borrowService.getBorrowsByUser(userId, pageable));
     }
+
+    @GetMapping
+    public ResponseEntity<Page<BorrowResponseDto>> getBorrows(Pageable pageable) {
+        log.info("درخواست دریافت لیست تمام امانت‌ها");
+        return ResponseEntity.ok(borrowService.getBorrows(pageable));
+    }
+
 }
